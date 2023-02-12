@@ -56,13 +56,17 @@ class Token:
             return None
 
 
-# Class for accessing protected data
 class Restricted:
     def __init__(self):
         # Secret key for encoding/decoding JWT
         self.secret = os.environ["SECRET_KEY"]
 
     def access_data(self, token):
+        # Check if the token has "Bearer" header prefix
+        if not token or not token.startswith("Bearer "):
+            return "Bad Request: Token missing or does not have the required header prefix"
+
+        token = token.split(" ")[1]
         try:
             # Decoding the JWT using the secret key
             decoded = jwt.decode(token, self.secret, algorithms=["HS256"])
@@ -76,7 +80,7 @@ class Restricted:
                 return None
         except jwt.exceptions.DecodeError:
             # Error message to be returned if the JWT is invalid
-            return {"error": "Bad Request: The token provided is invalid"}  
+            return "Bad Request: The token provided is invalid"
 
 
 # Class to validate the login
@@ -103,6 +107,6 @@ class Access:
         self.auth_tokens = [admin_token]
 
     def is_valid(self, auth_token):
-        if not auth_token:
+        if not auth_token or not auth_token.startswith("Bearer "):
             return False
-        return auth_token in self.auth_tokens
+        return auth_token[7:] in self.auth_tokens

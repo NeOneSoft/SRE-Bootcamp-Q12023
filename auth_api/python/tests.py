@@ -16,7 +16,9 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(self.admin_token, self.convert.generate_token('admin', self.admin_password))
 
     def test_access_data(self):
-        self.assertEqual('You are under protected data', self.validate.access_data(self.admin_token))
+        token = "Bearer " + self.admin_token
+        result = self.validate.access_data(token)
+        self.assertEqual(result, 'You are under protected data')
 
 
 class TestAPI(unittest.TestCase):

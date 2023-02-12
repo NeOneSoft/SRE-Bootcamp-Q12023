@@ -27,7 +27,7 @@ curl -d "username=admin&password=15e24a16abfc4eef5faeb806e903f78b188c30e4984a03b
 ```
 
 ```
-curl -H 'Accept: application/json' -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.StuYX978pQGnCeeaj2E1yBYwQvZIodyDTCJWXdsxBGI" localhost:8000/protected
+curl -H 'Accept: application/json' -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.StuYX978pQGnCeeaj2E1yBYwQvZIodyDTCJWXdsxBGI" localhost:8000/protected
 
 {
   "data": "You are under protected data"
@@ -51,6 +51,9 @@ Prerequisites:
 - BOB_PASSWORD
 - ADMIN_TOKEN
 
+NOTE: Make sure that all environment variables are set correctly,
+      otherwise you could have unexpected behaviors and running failed tests.
+
 Those values are provided in the README.md or stored in database.
 
 2.- Creat a Python 3 virtual env
@@ -71,13 +74,13 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-5.- Run the application
+5.- Run the application located in python directory
 
 ```
 python3 api.py
 ```
 
-Running tests
+Running tests located in python directory
 
 While api.py is running, open a new terminal and execute:
 
